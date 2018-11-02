@@ -2,6 +2,50 @@ const InboxRepository = require('./../repositories/inbox');
 const { errorCodes, httpStatus } = require('./../../configs/codes');
 
 const InboxController = {
+  /**
+   * @swagger
+   * /api/inbox:
+   *   get:
+   *     summary: Get all inbox
+   *     tags:
+   *      - Inbox
+   *     produces:
+   *        application/json
+   *     responses:
+   *       200:
+   *         description: success
+   *       404:
+   *         description: not found
+   *       500:
+   *         description: internal server error
+   * 
+   *   post:
+   *     summary: Create inbox
+   *     tags:
+   *      - Inbox
+   *     produces:
+   *        application/json
+   *     parameters:
+   *        - in: body
+   *          name: body
+   *          description: Parameter that needs to be added to the api
+   *          required: true
+   *          schema:
+   *            type: object
+   *            properties:
+   *              message:
+   *                type: string
+   *            example:
+   *              message: Hello
+   *     responses:
+   *       200:
+   *         description: success
+   *       404:
+   *         description: not found
+   *       500:
+   *         description: internal server error
+   */
+
   create: async (req, res) => {
     req.checkBody({
       message: { notEmpty: true, errorMessage: 'message field is required' }
@@ -22,6 +66,8 @@ const InboxController = {
         message: req.body.message
       });
 
+      // Send message to client realtime
+      req.io.emit('inbox', result);
       return res.status(httpStatus.ok).json({
         status: httpStatus.ok,
         success: true,
@@ -57,7 +103,7 @@ const InboxController = {
         data: e
       });
     }
-  }
+  },
 };
 
 module.exports = InboxController;

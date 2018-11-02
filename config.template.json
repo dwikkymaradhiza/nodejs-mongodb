@@ -5,5 +5,10 @@
   "DB_PORT": "__DB_PORT__",
   "DB_NAME": "__DB_NAME__",
   "DB_USER": "__DB_USER__",
-  "DB_PASS": "__DB_PASS__"
+  "DB_PASS": "__DB_PASS__",
+
+  "DOCS_VERSION": "1.0.0",
+  "DOCS_TITLE": "Inbox API Documentation",
+  "DOCS_USER": "dev",
+  "DOCS_PASSWORD": "admin123"
 }
